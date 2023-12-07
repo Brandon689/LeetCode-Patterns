@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeetCode_Patterns"
+        xmlns:html="clr-namespace:TheArtOfDev.HtmlRenderer.WPF;assembly=HtmlRenderer.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="750" Width="1200">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--<RichTextBox Name="richTextbox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="This is a sample text in the RichTextBox."/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>-->
+        <html:HtmlPanel Name="htmlPanel" Margin="10" />
+
+        <avalonEdit:TextEditor
+            Grid.Column="1"
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            Name="textEditor"
+            SyntaxHighlighting="C#"
+            FontFamily="Consolas"
+            FontSize="12pt"/>
 
     </Grid>
 </Window>

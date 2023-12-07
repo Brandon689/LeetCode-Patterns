@@ -9,4 +9,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="HtmlRenderer.Core" Version="1.5.0.6" />
+    <PackageReference Include="HtmlRenderer.WPF" Version="1.5.0.6" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
+  </ItemGroup>
+
 </Project>
