@@ -1,4 +1,7 @@
-﻿using SQLite;
+﻿using IronPython.Hosting;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
+using SQLite;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -11,6 +14,7 @@ namespace LeetCode_Patterns
         private Sql sql = new();
         string htmlContent;
         SQLiteConnection db;
+        private readonly ScriptEngine pythonEngine;
         public MainWindow()
         {//<script src='https://cdn.tailwindcss.com/3.3.5'></script>
             InitializeComponent();
@@ -37,6 +41,19 @@ namespace LeetCode_Patterns
             db = new SQLiteConnection(databasePath);
             db.CreateTable<Solution>();
             db.CreateTable<Problem>();
+            pythonEngine = Python.CreateEngine();
+
+
+            string pythonCode = @"result = 'Hello, IronPython!'";
+
+            var outputStream = new MemoryStream();
+            pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
+            ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromString(pythonCode, SourceCodeKind.SingleStatement);
+            ScriptScope scope = pythonEngine.CreateScope();
+            scriptSource.Execute(scope);
+
+            var result = scope.GetVariable("result").ToString();
+            ;
         }
 
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
