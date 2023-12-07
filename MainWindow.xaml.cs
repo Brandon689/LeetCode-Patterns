@@ -5,7 +5,6 @@ using SQLite;
 using System.IO;
 using System.Text;
 using System.Windows;
-using TheArtOfDev.HtmlRenderer.WPF;
 
 namespace LeetCode_Patterns
 {
@@ -44,16 +43,25 @@ namespace LeetCode_Patterns
             pythonEngine = Python.CreateEngine();
 
 
-            string pythonCode = @"result = 'Hello, IronPython!'";
+
+            //var outputStream = new MemoryStream();
+            //pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
+            //ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromString(pythonCode, SourceCodeKind.SingleStatement);
+            //ScriptScope scope = pythonEngine.CreateScope();
+            //scriptSource.Execute(scope);
+
+            //var result = scope.GetVariable("result").ToString();
+
+            ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromFile("../../../script.py");
 
             var outputStream = new MemoryStream();
             pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
-            ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromString(pythonCode, SourceCodeKind.SingleStatement);
             ScriptScope scope = pythonEngine.CreateScope();
             scriptSource.Execute(scope);
 
             var result = scope.GetVariable("result").ToString();
             ;
+            Console.WriteLine(result);
         }
 
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
