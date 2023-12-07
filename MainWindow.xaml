@@ -6,20 +6,24 @@
         xmlns:local="clr-namespace:LeetCode_Patterns"
         xmlns:wv="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1400">
-    <Grid Margin="20">
+        Title="LeetCode Patterns" Height="950" Width="1400">
+    <Grid Margin="10">
 
         <TabControl>
-            <TabItem Header="Tab 1">
-                <Grid>
+            <TabItem Header="Problem">
+                <Grid Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
+                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <wv:WebView2 Name="webView" Grid.Column="0"/>
 
+                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="10" Background="LightGray"/>
+
                     <avalonEdit:TextEditor
-                        Grid.Column="1"
+                        Grid.Column="2"
+                        Padding="10"
                         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                         Name="textEditor"
                         SyntaxHighlighting="C#"
@@ -28,8 +32,8 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Tab 2">
-                <Grid>
+            <TabItem Header="Add">
+                <Grid Margin="15">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
