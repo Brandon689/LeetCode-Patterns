@@ -9,9 +9,20 @@ namespace LeetCode_Patterns
 {
     public class Sql
     {
-        public static void AddStock(SQLiteConnection db, Solution solution)
+        public void AddSolution(SQLiteConnection db, Solution solution)
         {
             db.Insert(solution);
+        }
+
+        public void AddProblem(SQLiteConnection db, Problem p)
+        {
+            db.Insert(p);
+        }
+
+        public Problem a(SQLiteConnection db)
+        {
+            var query = db.Table<Problem>().Where(v => v.Id == 1);
+            return query.FirstOrDefault();
         }
     }
 }

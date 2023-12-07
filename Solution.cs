@@ -11,9 +11,13 @@ namespace LeetCode_Patterns
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Indexed]
-        public int StockId { get; set; }
-        public DateTime Time { get; set; }
         public decimal Price { get; set; }
+    }
+
+    public class Problem
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string ProblemHTML { get; set; }
     }
 }
