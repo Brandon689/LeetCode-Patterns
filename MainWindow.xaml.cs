@@ -5,6 +5,7 @@ using SQLite;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace LeetCode_Patterns
 {
@@ -18,20 +19,7 @@ namespace LeetCode_Patterns
         {//<script src='https://cdn.tailwindcss.com/3.3.5'></script>
             InitializeComponent();
 
-            textEditor.Text = @"class Solution:
-    def longestPalindrome(self, s: str) -> str:
-        if len(s) <= 1:
-            return s
-        
-        Max_Len=1
-        Max_Str=s[0]
-        for i in range(len(s)-1):
-            for j in range(i+1,len(s)):
-                if j-i+1 > Max_Len and s[i:j+1] == s[i:j+1][::-1]:
-                    Max_Len = j-i+1
-                    Max_Str = s[i:j+1]
-
-        return Max_Str";
+       
             webView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
             webView.EnsureCoreWebView2Async(null);
             // Get an absolute path to the database file
@@ -62,19 +50,66 @@ namespace LeetCode_Patterns
             var result = scope.GetVariable("result").ToString();
             ;
             Console.WriteLine(result);
+
+            var item = sql.pl(db);
+            foreach (var ut in item)
+            {
+                string newItem = ut.Id.ToString();
+                myListBox.Items.Add(newItem);
+            }
         }
 
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
-            htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + sql.a(db).ProblemHTML;
-            webView.CoreWebView2.NavigateToString(htmlContent);
+            //htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + sql.a(db).ProblemHTML;
+            //webView.CoreWebView2.NavigateToString(htmlContent);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Problem s = new();
-            s.ProblemHTML = paste.Text;
-            sql.AddProblem(db, s);
+            s.ProblemHTML = problemBox.Text;
+            s.CategoryId = myComboBox.SelectedIndex;
+
+            int i = sql.AddProblem(db, s);
+            var f = "C:\\Code3\\Dec\\LeetCode-Patterns\\python\\script.py";
+            File.WriteAllText(f, solutionBox.Text);
+
+
+            Solution v = new();
+            v.CategoryId = myComboBox.SelectedIndex;
+            v.ProblemId = i;
+            v.Path = f;
+            sql.AddSolution(db, v);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected item from the ComboBox
+            if (myComboBox.SelectedItem != null)
+            {
+                ComboBoxItem selectedComboBoxItem = (ComboBoxItem)myComboBox.SelectedItem;
+                string selectedText = selectedComboBoxItem.Content.ToString();
+            }
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected item content from the ListBox
+            if (myListBox.SelectedValue != null)
+            {
+                string selectedItemContent = myListBox.SelectedValue.ToString();
+
+                int x = int.Parse(selectedItemContent);
+
+                var p = sql.a(db,x);
+                var s = sql.s(db,x);
+
+                textEditor.Text = File.ReadAllText(s.Path);
+                myComboBox.SelectedIndex = p.CategoryId;
+                htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + p.ProblemHTML;
+                webView.CoreWebView2.NavigateToString(htmlContent);
+            }
         }
     }
 }

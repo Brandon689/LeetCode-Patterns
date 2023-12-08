@@ -9,17 +9,65 @@
         Title="LeetCode Patterns" Height="950" Width="1400">
     <Grid Margin="10">
 
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="myComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="130" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Array"/>
+                <ComboBoxItem Content="Hashmap"/>
+                <ComboBoxItem Content="Two Pointers"/>
+                <ComboBoxItem Content="Stack"/>
+                <ComboBoxItem Content="Binary Search"/>
+                <ComboBoxItem Content="Sliding Window"/>
+                <ComboBoxItem Content="Linked List"/>
+                <ComboBoxItem Content="Trees"/>
+                <ComboBoxItem Content="Tries"/>
+                <ComboBoxItem Content="Backtracking"/>
+                <ComboBoxItem Content="Heap / Priority Queue"/>
+                <ComboBoxItem Content="Graphs"/>
+                <ComboBoxItem Content="1-D DP"/>
+                <ComboBoxItem Content="Intervals"/>
+                <ComboBoxItem Content="Greedy"/>
+                <ComboBoxItem Content="Advanced Graphs"/>
+                <ComboBoxItem Content="2-D DP"/>
+                <ComboBoxItem Content="Bit Manipulation"/>
+                <ComboBoxItem Content="Math and Geometry"/>
+            </ComboBox>
+
+            <ComboBox x:Name="myComboBox2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="130" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Sorting"/>
+                <ComboBoxItem Content="Depth-First Search"/>
+                <ComboBoxItem Content="Bit Manipulation"/>
+                <ComboBoxItem Content="Ordered Set"/>
+                <ComboBoxItem Content="Queue"/>
+                <ComboBoxItem Content="Matrix"/>
+                <ComboBoxItem Content="Memoization"/>
+                <ComboBoxItem Content="Sliding Window"/>
+                <ComboBoxItem Content="Breadth-First Search"/>
+                <ComboBoxItem Content="Recursion"/>
+                <ComboBoxItem Content="Enumeration"/>
+                <ComboBoxItem Content="Union Find"/>
+            </ComboBox>
+        </Grid>
+
+        <TabControl Grid.Row="1">
             <TabItem Header="Problem">
                 <Grid Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="8"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <wv:WebView2 Name="webView" Grid.Column="0"/>
 
-                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="10" Background="LightGray"/>
+                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="8" Background="LightGray"/>
 
                     <avalonEdit:TextEditor
                         Grid.Column="2"
@@ -37,14 +85,22 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBox x:Name="paste">
+                    <TextBox x:Name="problemBox" AcceptsReturn="True">
                     </TextBox>
-
-                    <Button Grid.Row="1" Height="30" Content="click" Click="Button_Click"/>
+                    <TextBox Grid.Row="1" AcceptsReturn="True" x:Name="solutionBox">
+                    </TextBox>
+                    <Button Grid.Row="2" Height="30" Content="click" Click="Button_Click"/>
 
                 </Grid>
+            </TabItem>
+
+            <TabItem Header="List">
+                <ListBox x:Name="myListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Margin="10" SelectionChanged="ListBox_SelectionChanged">
+                    
+                </ListBox>
             </TabItem>
         </TabControl>
 

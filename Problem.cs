@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace LeetCode_Patterns
 {
-    public class Solution
+    public class Problem
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int ProblemId { get; set; }
         public int CategoryId { get; set; }
-        public string Path { get; set; }
+        public string ProblemHTML { get; set; }
     }
 }
