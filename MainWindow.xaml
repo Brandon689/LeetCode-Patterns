@@ -83,23 +83,24 @@
             <TabItem Header="Add">
                 <Grid Margin="15">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBox x:Name="problemBox" AcceptsReturn="True">
+                    <TextBox x:Name="nameBox"/>
+                    <TextBox Grid.Row="1" x:Name="problemBox" AcceptsReturn="True">
                     </TextBox>
-                    <TextBox Grid.Row="1" AcceptsReturn="True" x:Name="solutionBox">
+                    <TextBox Grid.Row="2" AcceptsReturn="True" x:Name="solutionBox">
                     </TextBox>
-                    <Button Grid.Row="2" Height="30" Content="click" Click="Button_Click"/>
+                    <Button Grid.Row="3" Height="30" Content="Add case" Click="Button_Click"/>
 
                 </Grid>
             </TabItem>
 
             <TabItem Header="List">
                 <ListBox x:Name="myListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Margin="10" SelectionChanged="ListBox_SelectionChanged">
-                    
                 </ListBox>
             </TabItem>
         </TabControl>

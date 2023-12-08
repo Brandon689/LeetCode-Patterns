@@ -28,7 +28,7 @@ namespace LeetCode_Patterns
             db = new SQLiteConnection(databasePath);
             db.CreateTable<Solution>();
             db.CreateTable<Problem>();
-            pythonEngine = Python.CreateEngine();
+            //pythonEngine = Python.CreateEngine();
 
 
 
@@ -40,23 +40,24 @@ namespace LeetCode_Patterns
 
             //var result = scope.GetVariable("result").ToString();
 
-            ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromFile("../../../script.py");
+            //ScriptSource scriptSource = pythonEngine.CreateScriptSourceFromFile("../../../script.py");
 
-            var outputStream = new MemoryStream();
-            pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
-            ScriptScope scope = pythonEngine.CreateScope();
-            scriptSource.Execute(scope);
+            //var outputStream = new MemoryStream();
+            //pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
+            //ScriptScope scope = pythonEngine.CreateScope();
+            //scriptSource.Execute(scope);
 
-            var result = scope.GetVariable("result").ToString();
-            ;
-            Console.WriteLine(result);
+            //var result = scope.GetVariable("result").ToString();
+            //;
+            //Console.WriteLine(result);
 
             var item = sql.pl(db);
             foreach (var ut in item)
             {
-                string newItem = ut.Id.ToString();
-                myListBox.Items.Add(newItem);
+                //string newItem = ut.Name.ToString();
+                myListBox.Items.Add(ut);
             }
+            myListBox.DisplayMemberPath = "Name";
         }
 
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
@@ -70,11 +71,10 @@ namespace LeetCode_Patterns
             Problem s = new();
             s.ProblemHTML = problemBox.Text;
             s.CategoryId = myComboBox.SelectedIndex;
-
+            s.Name = nameBox.Text;
             int i = sql.AddProblem(db, s);
-            var f = "C:\\Code3\\Dec\\LeetCode-Patterns\\python\\script.py";
+            var f = $"C:\\Code3\\Dec\\LeetCode-Patterns\\python\\{s.Name.Replace(" ", "-")}.py";
             File.WriteAllText(f, solutionBox.Text);
-
 
             Solution v = new();
             v.CategoryId = myComboBox.SelectedIndex;
@@ -85,7 +85,7 @@ namespace LeetCode_Patterns
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Get the selected item from the ComboBox
+
             if (myComboBox.SelectedItem != null)
             {
                 ComboBoxItem selectedComboBoxItem = (ComboBoxItem)myComboBox.SelectedItem;
@@ -98,14 +98,12 @@ namespace LeetCode_Patterns
             // Get the selected item content from the ListBox
             if (myListBox.SelectedValue != null)
             {
-                string selectedItemContent = myListBox.SelectedValue.ToString();
+                Problem selectedItem = myListBox.SelectedValue as Problem;
 
-                int x = int.Parse(selectedItemContent);
+                var p = sql.a(db, selectedItem.Id);
+                var s = sql.s(db, selectedItem.Id);
 
-                var p = sql.a(db,x);
-                var s = sql.s(db,x);
-
-                textEditor.Text = File.ReadAllText(s.Path);
+                  textEditor.Text = File.ReadAllText(s.Path);
                 myComboBox.SelectedIndex = p.CategoryId;
                 htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + p.ProblemHTML;
                 webView.CoreWebView2.NavigateToString(htmlContent);
