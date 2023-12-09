@@ -12,15 +12,13 @@ namespace LeetCode_Patterns
     public partial class MainWindow : Window
     {
         private Sql sql = new();
-        string htmlContent;
         SQLiteConnection db;
-        private readonly ScriptEngine pythonEngine;
+        //private readonly ScriptEngine pythonEngine;
         public MainWindow()
-        {//<script src='https://cdn.tailwindcss.com/3.3.5'></script>
+        {
             InitializeComponent();
-
-       
-            webView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
+   
+            //webView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
             webView.EnsureCoreWebView2Async(null);
             // Get an absolute path to the database file
             var databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "leetcode.db");
@@ -29,8 +27,6 @@ namespace LeetCode_Patterns
             db.CreateTable<Solution>();
             db.CreateTable<Problem>();
             //pythonEngine = Python.CreateEngine();
-
-
 
             //var outputStream = new MemoryStream();
             //pythonEngine.Runtime.IO.SetOutput(outputStream, Encoding.ASCII);
@@ -48,39 +44,36 @@ namespace LeetCode_Patterns
             //scriptSource.Execute(scope);
 
             //var result = scope.GetVariable("result").ToString();
-            //;
             //Console.WriteLine(result);
 
-            var item = sql.pl(db);
-            foreach (var ut in item)
+            var problemSet = sql.GetAllProblems(db);
+            foreach (var problem in problemSet)
             {
-                //string newItem = ut.Name.ToString();
-                myListBox.Items.Add(ut);
+                myListBox.Items.Add(problem);
             }
             myListBox.DisplayMemberPath = "Name";
         }
 
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
-            //htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + sql.a(db).ProblemHTML;
-            //webView.CoreWebView2.NavigateToString(htmlContent);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Add_Case_Button_Click(object sender, RoutedEventArgs e)
         {
-            Problem s = new();
-            s.ProblemHTML = problemBox.Text;
-            s.CategoryId = myComboBox.SelectedIndex;
-            s.Name = nameBox.Text;
-            int i = sql.AddProblem(db, s);
-            var f = $"C:\\Code3\\Dec\\LeetCode-Patterns\\python\\{s.Name.Replace(" ", "-")}.py";
+            Problem problem = new();
+            problem.ProblemHTML = problemBox.Text;
+            problem.CategoryId = myComboBox.SelectedIndex;
+            problem.Name = nameBox.Text;
+            myListBox.Items.Add(problem);
+            int i = sql.AddProblem(db, problem);
+            var f = $"C:\\Code3\\Dec\\LeetCode-Patterns\\python\\{problem.Name.Replace(" ", "-")}.py";
             File.WriteAllText(f, solutionBox.Text);
 
-            Solution v = new();
-            v.CategoryId = myComboBox.SelectedIndex;
-            v.ProblemId = i;
-            v.Path = f;
-            sql.AddSolution(db, v);
+            Solution solution = new();
+            solution.CategoryId = myComboBox.SelectedIndex;
+            solution.ProblemId = i;
+            solution.Path = f;
+            sql.AddSolution(db, solution);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,18 +88,16 @@ namespace LeetCode_Patterns
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Get the selected item content from the ListBox
             if (myListBox.SelectedValue != null)
             {
-                Problem selectedItem = myListBox.SelectedValue as Problem;
+                Problem? selectedItem = myListBox.SelectedValue as Problem;
 
-                var p = sql.a(db, selectedItem.Id);
-                var s = sql.s(db, selectedItem.Id);
+                var p = sql.GetProblemById(db, selectedItem.Id);
+                var s = sql.GetSolutionById(db, selectedItem.Id);
 
-                  textEditor.Text = File.ReadAllText(s.Path);
+                textEditor.Text = File.ReadAllText(s.Path);
                 myComboBox.SelectedIndex = p.CategoryId;
-                htmlContent = "<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + p.ProblemHTML;
-                webView.CoreWebView2.NavigateToString(htmlContent);
+                webView.CoreWebView2.NavigateToString("<script src='https://cdn.tailwindcss.com/3.3.5'></script>" + p.ProblemHTML);
             }
         }
     }

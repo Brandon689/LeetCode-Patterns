@@ -20,28 +20,28 @@ namespace LeetCode_Patterns
             return p.Id;
         }
 
-        public Problem a(SQLiteConnection db, int id)
+        public Problem GetProblemById(SQLiteConnection db, int id)
         {
             var query = db.Table<Problem>().Where(v => v.Id == id);
             return query.FirstOrDefault();
         }
 
-        public Solution s(SQLiteConnection db, int id)
+        public Solution GetSolutionById(SQLiteConnection db, int id)
         {
             var query = db.Table<Solution>().Where(v => v.ProblemId == id);
             return query.FirstOrDefault();
         }
 
-        public List<Problem> pl(SQLiteConnection db)
+        public List<Problem> GetAllProblems(SQLiteConnection db)
         {
             var query = db.Table<Problem>();
-            return query.ToList();
+            return [.. query];
         }
 
-        public List<Solution> sl(SQLiteConnection db)
+        public List<Solution> GetAllSolutions(SQLiteConnection db)
         {
             var query = db.Table<Solution>();
-            return query.ToList();
+            return [.. query];
         }
     }
 }

@@ -38,7 +38,7 @@
                 <ComboBoxItem Content="Advanced Graphs"/>
                 <ComboBoxItem Content="2-D DP"/>
                 <ComboBoxItem Content="Bit Manipulation"/>
-                <ComboBoxItem Content="Math and Geometry"/>
+                <ComboBoxItem Content="Hashset"/>
             </ComboBox>
 
             <ComboBox x:Name="myComboBox2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="130" SelectionChanged="ComboBox_SelectionChanged">
@@ -94,7 +94,7 @@
                     </TextBox>
                     <TextBox Grid.Row="2" AcceptsReturn="True" x:Name="solutionBox">
                     </TextBox>
-                    <Button Grid.Row="3" Height="30" Content="Add case" Click="Button_Click"/>
+                    <Button Grid.Row="3" Height="30" Content="Add case" Click="Add_Case_Button_Click"/>
 
                 </Grid>
             </TabItem>
